@@ -50,5 +50,5 @@ func httpExample(ctx context.Context, cfg *config.AppConfig) error {
 		return err
 	}
 
-	return client.PlaceCascadeOrders(bybitHttp.BuyDirection, bybitHttp.TonChain, 0.0001, 2500)
+	return client.PlaceCascadeOrders(bybitHttp.BuyDirection, bybitHttp.TonChain, 0.0001, 5110)
 }

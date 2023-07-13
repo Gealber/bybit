@@ -1,5 +1,6 @@
 package http
 
+// OrderRequest entity for creating an order
 type OrderRequest struct {
 	Category         string `json:"category,omitempty"`
 	Symbol           string `json:"symbol,omitempty"`
@@ -25,6 +26,8 @@ type OrderRequest struct {
 	MMP              bool   `json:"mmp,omitempty"`
 }
 
+// HistoryParams entitity for requesting history of a transaction
+// used in OrderHistory
 type HistoryParams struct {
 	Category    string `url:"category,omitempty"`
 	Symbol      string `url:"symbol,omitempty"`
@@ -39,6 +42,7 @@ type HistoryParams struct {
 	Cursor      string `url:"cursor,omitempty"`
 }
 
+// TickerParams entity for requesting ticker information about a coin
 type TickerParams struct {
 	Category string `url:"category,omitempty"`
 	Symbol   string `url:"symbol,omitempty"`
@@ -46,6 +50,7 @@ type TickerParams struct {
 	ExpDate  string `url:"expDate,omitempty"`
 }
 
+// WithdrawRequest entity for withdrawing assets
 type WithdrawRequest struct {
 	Coin        string `json:"coin"`
 	Chain       string `json:"chain"`

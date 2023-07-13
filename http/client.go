@@ -347,9 +347,9 @@ func (c *Client) GetWalletBalance(queryParams WalletBalanceParams) (*WalletBalan
 }
 
 // PlaceCascadeOrders is a custom method to perform several orders
-// In case we want to SELL the orders will decrease in value from the first bid in the order book
-// In case we want to BUY the orders will increase in value from the first ask in the order book
-// The number of orders to be created is 10
+// In case we want to SELL the orders will increase in value from the first bid in the order book
+// In case we want to BUY the orders will decrease in value from the first ask in the order book
+// The number of orders to be created is 10. All of the order created are limit orders
 func (c *Client) PlaceCascadeOrders(side, coin string, priceStep, coinQty float64) error {
 	currentPrice, err := c.getLatestOrderBookPrice(side, coin)
 	if err != nil {
