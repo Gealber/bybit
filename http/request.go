@@ -26,6 +26,15 @@ type OrderRequest struct {
 	MMP              bool   `json:"mmp,omitempty"`
 }
 
+// CancelRequest entity for cancelling order
+type CancelRequest struct {
+	Category    string `json:"category"`
+	Symbol      string `json:"symbol"`
+	OrderID     string `json:"orderId,omitempty"`
+	OrderLinkId string `json:"orderLinkId,omitempty"`
+	OrderFilter string `json:"orderFilter,omitempty"`
+}
+
 // HistoryParams entitity for requesting history of a transaction
 // used in OrderHistory
 type HistoryParams struct {

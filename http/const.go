@@ -27,5 +27,5 @@ const (
 )
 
 const (
-	DeafaultPlaceOrdersQty = 10
+	DeafaultPlaceOrdersQty = 20
 )

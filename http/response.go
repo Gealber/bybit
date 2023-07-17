@@ -9,6 +9,8 @@ type PlaceOrderResponse struct {
 	Time    int64          `json:"time"`
 }
 
+type CacelOrderResponse PlaceOrderResponse
+
 type OrderResponse struct {
 	OrderId     string `json:"orderId"`
 	OrderLinkId string `json:"orderLinkId"`

@@ -155,6 +155,29 @@ func (c *Client) PlaceOrder(order OrderRequest) (*OrderResponse, error) {
 	return response.Result, nil
 }
 
+// CancelOrder cancel an order in the exchange
+func (c *Client) CancelOrder(cancel CancelRequest) (*OrderResponse, error) {
+	path := "order/cancel"
+
+	request, err := c.NewRequest(http.MethodPost, path, nil, &cancel)
+	if err != nil {
+		return nil, err
+	}
+
+	var response CacelOrderResponse
+
+	err = c.Do(request, &response)
+	if err != nil {
+		return nil, err
+	}
+
+	if response.RetCode != RetCodeOK {
+		return nil, errors.New(response.RetMsg)
+	}
+
+	return response.Result, nil
+}
+
 // OrderHistory retrieve the order history
 func (c *Client) OrderHistory(queryParams HistoryParams) ([]*Order, error) {
 	path := "order/history"
@@ -387,9 +410,14 @@ func (c *Client) PlaceCascadeOrders(side, coin string, priceStep, coinQty float6
 	for _, order := range orders {
 		orderReq := order
 		errsGroup.Go(func() error {
-			_, err := c.PlaceOrder(orderReq)
+			resp, err := c.PlaceOrder(orderReq)
+			if err != nil {
+				return err
+			}
 
-			return err
+			c.logger.Printf("ORDER: %+v\n", resp)
+
+			return nil
 		})
 	}
 

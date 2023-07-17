@@ -23,7 +23,7 @@ func (t *TickersHandler) ProcessMsg(ctx context.Context, obj any) error {
 		return errors.New("invalid type of obj for TickersResponse")
 	}
 
-	t.logger.Printf("MSG: %+v\n", msg)
+	t.logger.Printf("%+v\n", msg)
 
 	return nil
 }

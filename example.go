@@ -13,13 +13,13 @@ func main() {
 	ctx := context.Background()
 	cfg := config.Config()
 
-	err := httpExample(ctx, cfg)
-	if err != nil {
-		panic(err)
-	}
+	// err := httpExample(ctx, cfg)
+	// if err != nil {
+	// 	panic(err)
+	// }
 
 	// WEBSOCKET EXAMPLE:
-	// websocketExample(ctx, cfg)
+	websocketExample(ctx, cfg)
 }
 
 func websocketExample(ctx context.Context, cfg *config.AppConfig) {
@@ -28,7 +28,7 @@ func websocketExample(ctx context.Context, cfg *config.AppConfig) {
 	tickerSubsciption := bybitWs.Request{
 		Op: "subscribe",
 		Args: []interface{}{
-			bybitWs.TickersTONUSDTTopic,
+			bybitWs.TickersBtcUSDTTopic,
 		},
 	}
 
@@ -36,7 +36,7 @@ func websocketExample(ctx context.Context, cfg *config.AppConfig) {
 		tickerSubsciption,
 	}
 	handlers := map[string]bybitWs.Handler{
-		bybitWs.TickersTONUSDTTopic: bybitWs.NewTickersHandler(),
+		bybitWs.TickersBtcUSDTTopic: bybitWs.NewTickersHandler(),
 	}
 
 	if err := wb.Run(ctx, subscriptions, handlers); err != nil {
@@ -50,5 +50,30 @@ func httpExample(ctx context.Context, cfg *config.AppConfig) error {
 		return err
 	}
 
-	return client.PlaceCascadeOrders(bybitHttp.BuyDirection, bybitHttp.TonChain, 0.0001, 5110)
+	return client.PlaceCascadeOrders(bybitHttp.SellDirection, bybitHttp.TonChain, 0.0001, 9500)
+}
+
+func cancelOrder(ctx context.Context, cfg *config.AppConfig) error {
+	client, err := bybitHttp.New(cfg)
+	if err != nil {
+		return err
+	}
+
+	orders := []bybitHttp.OrderResponse{}
+
+	for _, order := range orders {
+		cancel := bybitHttp.CancelRequest{
+			Category:    "spot",
+			Symbol:      "TONUSDT",
+			OrderID:     order.OrderId,
+			OrderLinkId: order.OrderLinkId,
+		}
+		_, err := client.CancelOrder(cancel)
+		if err != nil {
+			// return err
+			log.Println(err)
+		}
+	}
+
+	return nil
 }

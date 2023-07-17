@@ -14,6 +14,7 @@ const (
 
 const (
 	TickersTONUSDTTopic = "tickers.TONUSDT"
+	TickersBtcUSDTTopic = "tickers.BTCUSDT"
 )
 
 const (
