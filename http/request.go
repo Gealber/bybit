@@ -51,6 +51,15 @@ type HistoryParams struct {
 	Cursor      string `url:"cursor,omitempty"`
 }
 
+// BorrowHistoryParams entitity for requesting history of a borrowed actions
+type BorrowHistoryParams struct {
+	Currency  string `url:"currency,omitempty"`
+	StartTime int64  `url:"startTime,omitempty"`
+	EndTime   int64  `url:"endTime,omitempty"`
+	Limit     int    `url:"limit,omitempty"`
+	Cursor    string `url:"cursor,omitempty"`
+}
+
 // TickerParams entity for requesting ticker information about a coin
 type TickerParams struct {
 	Category string `url:"category,omitempty"`

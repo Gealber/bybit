@@ -13,13 +13,13 @@ func main() {
 	ctx := context.Background()
 	cfg := config.Config()
 
-	// err := httpExample(ctx, cfg)
-	// if err != nil {
-	// 	panic(err)
-	// }
+	err := httpExample(ctx, cfg)
+	if err != nil {
+		panic(err)
+	}
 
 	// WEBSOCKET EXAMPLE:
-	websocketExample(ctx, cfg)
+	// websocketExample(ctx, cfg)
 }
 
 func websocketExample(ctx context.Context, cfg *config.AppConfig) {
@@ -28,7 +28,9 @@ func websocketExample(ctx context.Context, cfg *config.AppConfig) {
 	tickerSubsciption := bybitWs.Request{
 		Op: "subscribe",
 		Args: []interface{}{
-			bybitWs.TickersBtcUSDTTopic,
+			// bybitWs.TickersBtcUSDTTopic,
+			bybitWs.TickersTONUSDTTopic,
+			bybitWs.TickersXLMUSDTTopic,
 		},
 	}
 
@@ -36,7 +38,9 @@ func websocketExample(ctx context.Context, cfg *config.AppConfig) {
 		tickerSubsciption,
 	}
 	handlers := map[string]bybitWs.Handler{
-		bybitWs.TickersBtcUSDTTopic: bybitWs.NewTickersHandler(),
+		// bybitWs.TickersBtcUSDTTopic: bybitWs.NewTickersHandler(),
+		bybitWs.TickersTONUSDTTopic: bybitWs.NewTickersHandler(),
+		bybitWs.TickersXLMUSDTTopic: bybitWs.NewTickersHandler(),
 	}
 
 	if err := wb.Run(ctx, subscriptions, handlers); err != nil {
@@ -50,7 +54,20 @@ func httpExample(ctx context.Context, cfg *config.AppConfig) error {
 		return err
 	}
 
-	return client.PlaceCascadeOrders(bybitHttp.SellDirection, bybitHttp.TonChain, 0.0001, 9500)
+	// return client.PlaceCascadeOrders(bybitHttp.BuyDirection, bybitHttp.TonChain, 0.0001, 10600)
+	queryParams := bybitHttp.BorrowHistoryParams{
+		Currency: "USDT",
+	}
+	list, err := client.BorrowHistory(queryParams)
+	if err != nil {
+		return err
+	}
+
+	for _, record := range list {
+		log.Printf("RECORD: %+v\n", record)
+	}
+
+	return nil
 }
 
 func cancelOrder(ctx context.Context, cfg *config.AppConfig) error {

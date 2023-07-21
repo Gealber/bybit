@@ -369,6 +369,28 @@ func (c *Client) GetWalletBalance(queryParams WalletBalanceParams) (*WalletBalan
 	return response.Result, err
 }
 
+// BorrowHistory retrieve the borrowed history
+func (c *Client) BorrowHistory(queryParams BorrowHistoryParams) ([]*Borrow, error) {
+	path := "account/borrow-history"
+
+	request, err := c.NewRequest(http.MethodGet, path, queryParams, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	var response BorrowHistoryResponse
+	err = c.Do(request, &response)
+	if err != nil {
+		return nil, err
+	}
+
+	if response.RetCode != RetCodeOK {
+		return nil, errors.New(response.RetMsg)
+	}
+
+	return response.Result.List, nil
+}
+
 // PlaceCascadeOrders is a custom method to perform several orders
 // In case we want to SELL the orders will increase in value from the first bid in the order book
 // In case we want to BUY the orders will decrease in value from the first ask in the order book

@@ -23,10 +23,23 @@ type OrderHistoryResponse struct {
 	Time    int64              `json:"time"`
 }
 
+type BorrowHistoryResponse struct {
+	RetCode int                 `json:"retCode"`
+	RetMsg  string              `json:"retMsg"`
+	Result  *BorrowListResponse `json:"result"`
+	Time    int64               `json:"time"`
+}
+
 type OrderListResponse struct {
 	NextPageCursor string   `json:"nextPageCursor"`
 	Category       string   `json:"category"`
 	List           []*Order `json:"list"`
+}
+
+type BorrowListResponse struct {
+	NextPageCursor string    `json:"nextPageCursor"`
+	Category       string    `json:"category"`
+	List           []*Borrow `json:"list"`
 }
 
 type TickerListResponse struct {
@@ -214,4 +227,13 @@ type CoinBalanceInfo struct {
 	WalletBalance       string `json:"walletBalance"`
 	CumRealisedPnl      string `json:"cumRealisedPnl"`
 	Coin                string `json:"coin"`
+}
+
+type Borrow struct {
+	CreatedTime               int64  `json:"createdTime"`
+	CostExemption             string `json:"costExemption"`
+	InterestBearingBorrowSize string `json:"InterestBearingBorrowSize"`
+	Currency                  string `json:"currency"`
+	HourlyBorrowRate          string `json:"hourlyBorrowRate"`
+	BorrowCost                string `json:"borrowCost"`
 }
