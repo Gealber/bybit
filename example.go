@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/Gealber/bybit/config"
@@ -10,16 +11,33 @@ import (
 )
 
 func main() {
-	ctx := context.Background()
+	// ctx := context.Background()
 	cfg := config.Config()
 
-	err := httpExample(ctx, cfg)
+	// err := httpExample(ctx, cfg)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	// WEBSOCKET EXAMPLE:
+	// websocketExample(ctx, cfg)
+
+	client, err := bybitHttp.New(cfg)
 	if err != nil {
 		panic(err)
 	}
 
-	// WEBSOCKET EXAMPLE:
-	// websocketExample(ctx, cfg)
+	query := bybitHttp.TickerParams{
+		Category: "spot",
+		Symbol:   "TONUSDT",
+		BaseCoin: "TON",
+	}
+	resp, err := client.GetTickers(query)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("RESP: %+v\n", resp[0])
 }
 
 func websocketExample(ctx context.Context, cfg *config.AppConfig) {
@@ -29,8 +47,11 @@ func websocketExample(ctx context.Context, cfg *config.AppConfig) {
 		Op: "subscribe",
 		Args: []interface{}{
 			// bybitWs.TickersBtcUSDTTopic,
-			bybitWs.TickersTONUSDTTopic,
-			bybitWs.TickersXLMUSDTTopic,
+			// bybitWs.TickersTONUSDTTopic,
+			// bybitWs.TickersXLMUSDTTopic,
+			bybitWs.TickersETHUSDCTopic,
+			bybitWs.TickersETHUSDTTopic,
+			bybitWs.TickersUSDCUSDTTopic,
 		},
 	}
 
@@ -39,8 +60,11 @@ func websocketExample(ctx context.Context, cfg *config.AppConfig) {
 	}
 	handlers := map[string]bybitWs.Handler{
 		// bybitWs.TickersBtcUSDTTopic: bybitWs.NewTickersHandler(),
-		bybitWs.TickersTONUSDTTopic: bybitWs.NewTickersHandler(),
-		bybitWs.TickersXLMUSDTTopic: bybitWs.NewTickersHandler(),
+		// bybitWs.TickersTONUSDTTopic: bybitWs.NewTickersHandler(),
+		// bybitWs.TickersXLMUSDTTopic: bybitWs.NewTickersHandler(),
+		bybitWs.TickersETHUSDCTopic:  bybitWs.NewTickersHandler(),
+		bybitWs.TickersETHUSDTTopic:  bybitWs.NewTickersHandler(),
+		bybitWs.TickersUSDCUSDTTopic: bybitWs.NewTickersHandler(),
 	}
 
 	if err := wb.Run(ctx, subscriptions, handlers); err != nil {

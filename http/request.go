@@ -68,6 +68,16 @@ type TickerParams struct {
 	ExpDate  string `url:"expDate,omitempty"`
 }
 
+// KlineParams entity for requesting kline information about a coin
+type KlineParams struct {
+	Category string `url:"category"`
+	Symbol   string `url:"symbol"`
+	Interval string `url:"interval"`
+	Start    int    `url:"start"`
+	End      int    `url:"end,omitempty"`
+	Limit    int    `url:"limit,omitempty"`
+}
+
 // WithdrawRequest entity for withdrawing assets
 type WithdrawRequest struct {
 	Coin        string `json:"coin"`

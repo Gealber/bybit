@@ -13,9 +13,12 @@ const (
 )
 
 const (
-	TickersTONUSDTTopic = "tickers.TONUSDT"
-	TickersBtcUSDTTopic = "tickers.BTCUSDT"
-	TickersXLMUSDTTopic = "tickers.XLMUSDT"
+	TickersTONUSDTTopic  = "tickers.TONUSDT"
+	TickersBtcUSDTTopic  = "tickers.BTCUSDT"
+	TickersXLMUSDTTopic  = "tickers.XLMUSDT"
+	TickersETHUSDTTopic  = "tickers.ETHUSDT"
+	TickersETHUSDCTopic  = "tickers.ETHUSDC"
+	TickersUSDCUSDTTopic = "tickers.USDCUSDT"
 )
 
 const (

@@ -240,6 +240,24 @@ func (c *Client) GetTickers(queryParams TickerParams) ([]*Ticker, error) {
 	return response.Result.List, err
 }
 
+// GetKline retrieve kline
+func (c *Client) GetKline(queryParams KlineParams) ([]Kline, error) {
+	path := "market/kline"
+
+	request, err := c.NewRequest(http.MethodGet, path, queryParams, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	var response KlineResponse
+	err = c.Do(request, &response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Result.List, err
+}
+
 // Witdraw create a withdraw request. Take into account that to perform a withdraw
 // you api key should be bind to a fix IP address. Read more about in bybit doc.
 func (c *Client) Withdraw(withdraw WithdrawRequest) (string, error) {

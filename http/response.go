@@ -193,6 +193,19 @@ type WalletBalanceResponse struct {
 	Time    int64                `json:"time"`
 }
 
+type KlineResponse struct {
+	RetCode int          `json:"retCode"`
+	RetMsg  string       `json:"retMsg"`
+	Result  *KlineResult `json:"result"`
+	Time    int64        `json:"time"`
+}
+
+type KlineResult struct {
+	Symbol   string  `json:"symbol"`
+	Category string  `json:"category"`
+	List     []Kline `json:"list"`
+}
+
 type WalletBalanceResult struct {
 	List []WalletBalance `json:"list"`
 }
@@ -237,3 +250,5 @@ type Borrow struct {
 	HourlyBorrowRate          string `json:"hourlyBorrowRate"`
 	BorrowCost                string `json:"borrowCost"`
 }
+
+type Kline []string
