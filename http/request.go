@@ -78,6 +78,13 @@ type KlineParams struct {
 	Limit    int    `url:"limit,omitempty"`
 }
 
+// OrderBookParams entity for requesting order book information about a coin
+type OrderBookParams struct {
+	Category string `url:"category"`
+	Symbol   string `url:"symbol"`
+	Limit    int    `url:"limit,omitempty"`
+}
+
 // WithdrawRequest entity for withdrawing assets
 type WithdrawRequest struct {
 	Coin        string `json:"coin"`

@@ -27,17 +27,25 @@ func main() {
 		panic(err)
 	}
 
-	query := bybitHttp.TickerParams{
+	query := bybitHttp.OrderBookParams{
 		Category: "spot",
 		Symbol:   "TONUSDT",
-		BaseCoin: "TON",
+		Limit:    50,
 	}
-	resp, err := client.GetTickers(query)
+	resp, err := client.GetOrderBook(query)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Printf("RESP: %+v\n", resp[0])
+	fmt.Println("ASKS")
+	for _, r := range resp.Asks {
+		fmt.Printf("RESP: %+v\n", r)
+	}
+
+	fmt.Println("BIDS")
+	for _, r := range resp.Bids {
+		fmt.Printf("RESP: %+v\n", r)
+	}
 }
 
 func websocketExample(ctx context.Context, cfg *config.AppConfig) {

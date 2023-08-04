@@ -9,6 +9,13 @@ type PlaceOrderResponse struct {
 	Time    int64          `json:"time"`
 }
 
+type OrderBookResponse struct {
+	RetCode int              `json:"retCode"`
+	RetMsg  string           `json:"retMsg"`
+	Result  *OrderBookResult `json:"result"`
+	Time    int64            `json:"time"`
+}
+
 type CacelOrderResponse PlaceOrderResponse
 
 type OrderResponse struct {
@@ -46,6 +53,14 @@ type TickerListResponse struct {
 	NextPageCursor string    `json:"nextPageCursor"`
 	Category       string    `json:"category"`
 	List           []*Ticker `json:"list"`
+}
+
+type OrderBookResult struct {
+	Symbol    string     `json:"s"`
+	Asks      [][]string `json:"a"`
+	Bids      [][]string `json:"b"`
+	Timestamp int64      `json:"ts"`
+	UpdateID  int        `json:"u"`
 }
 
 type TickersResponse struct {

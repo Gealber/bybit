@@ -258,6 +258,24 @@ func (c *Client) GetKline(queryParams KlineParams) ([]Kline, error) {
 	return response.Result.List, err
 }
 
+// GetOrderBook retrieve order book
+func (c *Client) GetOrderBook(queryParams OrderBookParams) (*OrderBookResult, error) {
+	path := "market/orderbook"
+
+	request, err := c.NewRequest(http.MethodGet, path, queryParams, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	var response OrderBookResponse
+	err = c.Do(request, &response)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Result, err
+}
+
 // Witdraw create a withdraw request. Take into account that to perform a withdraw
 // you api key should be bind to a fix IP address. Read more about in bybit doc.
 func (c *Client) Withdraw(withdraw WithdrawRequest) (string, error) {
